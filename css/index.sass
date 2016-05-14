@@ -1,0 +1,49 @@
+@import '~font-awesome/css/font-awesome.css'
+@import '~roboto-fontface/css/roboto-fontface.css'
+
+
+$tcolor : #7E9BA0
+$dcolor : #f06292 /* #f57c00 */
+$ccolor : #f06292
+$bcolor: #fff
+
+html,body
+  height: 100%
+  font-family: Roboto
+  font-size: 1em
+
+*
+  margin: 0px
+  padding: 0px
+  box-sizing: border-box
+
+.application
+  background: #f3f3f3
+  height: 100%
+  background-size: cover
+  display: flex
+  flex-direction: row
+
+.super-line
+  color: $bcolor
+  text-transform: uppercase
+  font-size: 12px
+  margin: 20px 0px
+  text-align: center
+  position: relative
+  &:before
+    content: ''
+    display: inline-block
+    border-bottom: 1px solid $bcolor
+    margin-bottom: 3px
+    margin-right: 20px
+    width: 80px
+  &:after
+    content: ''
+    display: inline-block
+    border-bottom: 1px solid $bcolor
+    margin-bottom: 3px
+    margin-left: 20px
+    width: 80px
+
+@import './application.sass'

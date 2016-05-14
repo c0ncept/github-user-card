@@ -1,0 +1,173 @@
+
+.wrapper
+  display: flex
+  width: 100%
+  align-items: stretch
+
+.wrapper > .loading
+  margin: auto
+  width: 200px
+  text-align: center
+  span
+    display: inline-block
+    width: 10px
+    height: 10px
+    border-radius: 50%
+    border: 1px solid #880e4f
+    margin: 0px 10px
+    opacity: .1
+    @for $i from 1 through 5
+      &:nth-child(#{$i})
+        animation: blink 1.3s infinite
+        animation-delay: #{'.' +(($i +2) * 100)}s
+
+@keyframes blink
+  0%
+    opacity: 1
+    background: #880e4f
+  50%
+    opacity: 1
+    background: #fff
+  100%
+    opacity: .1
+    background: #fff
+
+.wrapper > .card
+  margin: auto
+  width: 360px
+  border-radius: 5px 5px 0px 0px
+  background: $ccolor
+  box-shadow: 6px 6px 8px #999
+  .header
+    position: relative
+    display: flex
+    align-items: center
+    flex-direction: column
+    border-radius: 5px 5px 0px 0px
+    height: 200px
+    .avatar, .avatar > img
+      width: 100px
+      height: 100px
+    .avatar
+      overflow: hidden
+      border-radius: 100%
+      border: 3px solid #eee
+      margin: auto
+
+.wrapper > .card > .header
+  background: #fff
+  span.repos-count
+    position: absolute
+    left: 130px
+    top: 90px
+    background: $dcolor
+    color: #fff
+    font-size: 12px
+    font-weight: bold
+    display: block
+    width: 28px
+    height: 28px
+    border: 2px solid #fff
+    line-height: 24px
+    text-align: center
+    border-radius: 50%
+  a.userlink
+    background: $tcolor
+    color: #fff
+    padding: 4px 10px
+    position: absolute
+    right: 0px
+    top: 0px
+    text-decoration: none
+    &:hover
+      background: $dcolor
+    i
+      font-size: 12px
+      margin: 0px 0px 0px 5px
+  .userinfo
+    text-align: center
+    padding: 0px 0px 20px 0px
+    h2
+      color: $tcolor
+    p
+      color: $tcolor
+
+.wrapper > .card > .top-repos
+  padding: 0px 0px
+  .repository
+    text-decoration: none
+    display: flex
+    flex-direction: row
+    align-items: stretch
+    //border-bottom: 1px dashed $bcolor
+
+    &:last-child
+      border-bottom: none
+
+    &:hover
+      .title,.desc
+        border-color: transparent
+        color: $bcolor
+      .repo-info
+        background: $ccolor
+
+    .title
+      display: inline-block
+      margin-top: 5px
+      font-weight: bold
+      border-bottom: 1px dashed $bcolor
+      color: darken($bcolor, 1%)
+      margin-left: 10px
+      overflow: hidden
+      font-size: 16px
+      max-width: 290px
+    .desc
+      display: block
+      font-size: 12px
+      color: darken($bcolor, 1%)
+      height: 14px
+      overflow: hidden
+      margin-left: 10px
+      max-width: 290px
+
+    .repo-info
+      display: block
+      width: 54px
+      height: 48px
+      text-align: center
+      background: $bcolor
+      line-height: 48px
+      //border-bottom: 1px dashed #fff
+      span > i
+        color: $ccolor
+        font-size: 12px
+      span > span
+        color: $ccolor
+        font-weight: bold
+        font-size: 12px
+        padding: 2px 3px
+
+.wrapper > .card > .chart
+  background: #fff
+  width: 360px
+  overflow: hidden
+  canvas
+    position: relative
+    left: -5px
+    bottom: -9px
+
+.wrapper > .card > .totals
+  display: flex
+  flex-direction: row
+  align-items: stretch
+  padding: 20px 0px
+  background: $bcolor
+  & > div
+    &:first-child
+      border-right: 1px solid #ddd
+    flex-grow: 1
+    text-align: center
+    color: $ccolor
+    .desc
+      text-transform: uppercase
+      font-size: 8px
