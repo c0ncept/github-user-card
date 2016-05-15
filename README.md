@@ -12,3 +12,7 @@ Set up another username. Just use global `GITHUB_USER` variable to set your gith
 ```js
 const GITHUB_USER = 'linuxenko'
 ```
+
+### License
+
+MIT
