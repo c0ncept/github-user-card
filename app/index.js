@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom'
 import 'whatwg-fetch'
 import Card from 'Card'
 
+const GITHUB_USER = 'linuxenko'
+
+
 const GITHUB_URL = 'https://api.github.com/users/'
 
 
@@ -10,7 +13,7 @@ class Application extends React.Component {
   constructor() {
     super()
     this.state = {user : {}, repos : []}
-    this.loadGitHubUser('linuxenko')
+    this.loadGitHubUser(GITHUB_USER)
   }
 
   loadGitHubUser(user) {
@@ -24,7 +27,6 @@ class Application extends React.Component {
   }
 
   render() {
-    console.log(this.state.user, this.state.repos)
     let children = this.state.user.hasOwnProperty('login')
       ? <Card user={this.state.user} repos={this.state.repos} events={this.state.events} />
       : <div className="loading"><span></span><span></span><span></span><span></span><span></span></div>

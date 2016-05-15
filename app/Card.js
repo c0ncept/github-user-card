@@ -84,8 +84,6 @@ class DataChart extends React.Component {
 
 class RepoChart extends React.Component {
   componentDidMount() {
-
-    console.log(this.props.repos)
     var htmlData = [
       {
         value: this.props.repos[0].stargazers_count,
