@@ -16,3 +16,4 @@ const GITHUB_USER = 'linuxenko'
 ### License
 
 MIT
+(c) 2016 Svetlana Linuxenko
