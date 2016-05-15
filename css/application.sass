@@ -71,6 +71,14 @@
     line-height: 24px
     text-align: center
     border-radius: 50%
+    &:after
+      content: 'repos'
+      position: absolute
+      color: $tcolor
+      text-transform: uppercase
+      font-size: 8px
+      bottom: -20px
+      left: 0px
   a.userlink
     background: $tcolor
     color: #fff
@@ -93,81 +101,73 @@
       color: $tcolor
 
 .wrapper > .card > .top-repos
-  padding: 0px 0px
+  display: flex
+  flex-direction: column
+  align-items: stretch
+  padding: 10px 0px 0px 0px
+  background: $ccolor
+  text-align: center
   .repository
+    margin: 5px 0px
+    flex-grow: 1
+    text-align: center
+    font-size: 16px
+    color: #fff
     text-decoration: none
-    display: flex
-    flex-direction: row
-    align-items: stretch
-    //border-bottom: 1px dashed $bcolor
-
-    &:last-child
-      border-bottom: none
-
-    &:hover
-      .title,.desc
-        border-color: transparent
-        color: $bcolor
-      .repo-info
-        background: $ccolor
-
+    i
+      display: block
+      margin-bottom: 5px
+      font-size: 8px
     .title
-      display: inline-block
-      margin-top: 5px
-      font-weight: bold
-      border-bottom: 1px dashed $bcolor
-      color: darken($bcolor, 1%)
-      margin-left: 10px
-      overflow: hidden
-      font-size: 16px
-      max-width: 290px
-    .desc
-      display: block
+      text-transform: uppercase
       font-size: 12px
-      color: darken($bcolor, 1%)
-      height: 14px
-      overflow: hidden
-      margin-left: 10px
-      max-width: 290px
 
-    .repo-info
+
+
+
+.wrapper > .card > .pie-chart-wrap
+  position: relative
+  text-align: center
+  .pie-chart
+    margin-top: 40px
+  .pie-chart-totals
+    position: absolute
+    top: 100px
+    width: 100%
+    color: #fff
+    font-weight: bold
+    font-size: 22px
+    i
       display: block
-      width: 54px
-      height: 48px
-      text-align: center
-      background: $bcolor
-      line-height: 48px
-      //border-bottom: 1px dashed #fff
-      span > i
-        color: $ccolor
-        font-size: 12px
-      span > span
-        color: $ccolor
-        font-weight: bold
-        font-size: 12px
-        padding: 2px 3px
+      margin-bottom: 10px
 
 .wrapper > .card > .chart
   background: #fff
   width: 360px
   overflow: hidden
+  height: 100px
   canvas
     position: relative
     left: -5px
     bottom: -9px
 
+.wrapper > .card > .activity-line
+  padding-top: 40px
+
 .wrapper > .card > .totals
   display: flex
   flex-direction: row
   align-items: stretch
-  padding: 20px 0px
+  padding: 10px 0px 0px 0px
   background: $bcolor
   & > div
-    &:first-child
+    &:nth-child(2)
       border-right: 1px solid #ddd
+      border-left: 1px solid #ddd
     flex-grow: 1
     text-align: center
-    color: $ccolor
+    font-size: 16px
+    color: $tcolor
     .desc
       text-transform: uppercase
-      font-size: 8px
+      font-size: 9px

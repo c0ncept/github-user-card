@@ -1,5 +1,6 @@
 import React from 'react'
 import Chart from 'chart.js'
+import moment from 'moment'
 
 Chart.defaults.global = {
   animation: true,
@@ -20,45 +21,58 @@ class Repo extends React.Component {
     let {repo} = this.props
     return (
         <a className="repository" href={repo.html_url}>
-          <span className="repo-info">
-            <span><i className="fa fa-star"></i>
-              <span>{repo.stargazers_count}</span>
-            </span>
-          </span>
-          <span>
-            <span className="title">{repo.name}</span>
-            <span className="desc">{repo.description}</span>
-          </span>
+          <div className="repo-info">
+            <div><i className="fa fa-star"></i>
+              <span></span><span className="title">{repo.name}</span>
+            </div>
+
+          </div>
         </a>
     )
   }
 }
 
 class DataChart extends React.Component {
+
+  eventsRange(event) {
+    let range = []
+    for (let i = 11; i > 0; i--) {
+      range.push(moment().subtract(i, 'days').format('YYYY-MM-DD'))
+    }
+    let evtmp = this.props.events
+      .filter(e => event(e.type))
+      .map(e => e.created_at.match(/^(\d{4}-\d{2}-\d{2}).*/)[1])
+
+    return range.map(r => evtmp.reduce(function(p,c) { return r === c ? p + 1 : p}, 0))
+
+  }
+
   componentDidMount() {
+    let pushEvents = this.eventsRange((e) => e === 'PushEvent')
+    let miscEvents = this.eventsRange((e) => e !== 'PushEvent')
+
     var lineChartData = {
-      labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      labels: pushEvents,
       datasets: [{
-        label: "Growth",
         fillColor: "#7E9BA0",
         strokeColor: "rgba(0,0,0,0)",
         pointColor: "rgba(255, 255, 255, 0)",
         pointStrokeColor: "rgba(255, 255, 255, 0)",
-        data: [300, 200, 250, 100, 120, 50, 170, 150, 150, 220, 200, 300]
+        data: pushEvents
       }, {
-        label: "Loss",
         fillColor: "#f06292",
+        strokeColor: "rgba(0,0,0,0)",
         pointColor: "rgba(255, 255, 255, 0)",
         pointStrokeColor: "rgba(255, 255, 255, 0)",
-        data: [100, 150, 100, 70, 10, 20, 90, 90, 120, 120, 150, 150]
+        data: miscEvents
       }]
     };
 
-
     var ctx1 = document.getElementById("chart").getContext("2d");
-    window.myLine = new Chart(ctx1).Line(lineChartData);
+    this.chart = new Chart(ctx1).Line(lineChartData);
 
   }
+
   render() {
     return (
       <div className="chart">
@@ -68,13 +82,60 @@ class DataChart extends React.Component {
   }
 }
 
+class RepoChart extends React.Component {
+  componentDidMount() {
+
+    console.log(this.props.repos)
+    var htmlData = [
+      {
+        value: this.props.repos[0].stargazers_count,
+        color: "#f8bbd0"
+      },
+      {
+        value : this.props.repos[1].stargazers_count,
+        color : "#ec407a"
+      },
+      {
+        value : this.props.repos[2].stargazers_count,
+        color : "#fff"
+      }
+    ];
+    var ctx2 = document.getElementById("pie").getContext("2d");
+    new Chart(ctx2).Doughnut(htmlData, {
+      segmentShowStroke: false,
+      percentageInnerCutout : 80
+    })
+  }
+  render() {
+    let totals = this.props.repos.reduce(function(p,c) {
+      return p + c.stargazers_count
+    },0)
+    return (
+      <div className="pie-chart-wrap">
+        <div className="pie-chart-totals">
+          <i className="fa fa-star"></i>{totals}
+        </div>
+        <canvas id="pie" className="pie-chart" width="180" height="180">
+        </canvas>
+      </div>
+    )
+  }
+}
+
 
 export default class Card extends React.Component {
   render() {
-    let repos = this.props.repos
+    let reposData = this.props.repos
       .sort((a,b) => b.stargazers_count - a.stargazers_count)
       .slice(0,3)
+    let repos = reposData
       .map((r,i) => <Repo key={i} repo={r} />)
+
+    let starred = this.props.repos
+      .reduce(function(p,c) {return p + Number(c.stargazers_count) }, 0)
+
+    let forked = this.props.repos
+      .reduce(function(p,c) {return p + Number(c.forks_count) }, 0)
 
     return (
         <div className="card">
@@ -98,28 +159,30 @@ export default class Card extends React.Component {
               <p>{this.props.user.location}</p>
             </div>
           </div>
-
-          <DataChart />
-
-          <div className="super-line">TOP Rated</div>
-
-          <div className="top-repos">
-            {repos}
-          </div>
-
           <div className="totals">
             <div>
               {this.props.user.followers}
               <div className="desc">Followers</div>
             </div>
             <div>
-              {this.props.user.following}
-              <div className="desc">Following</div>
+              {starred}
+              <div className="desc">Total stars</div>
+            </div>
+            <div>
+              {forked}
+              <div className="desc">Times Forked</div>
             </div>
           </div>
 
+          <DataChart events={this.props.events} />
 
-
+          <br /><br />
+          <div className="super-line">TOP Rated</div>
+            <RepoChart repos={reposData} />
+          <div className="top-repos">
+            {repos}
+          </div>
+  <br /><br />
         </div>
     )
   }

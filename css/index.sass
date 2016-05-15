@@ -28,7 +28,6 @@ html,body
   color: $bcolor
   text-transform: uppercase
   font-size: 12px
-  margin: 20px 0px
   text-align: center
   position: relative
   &:before
@@ -45,5 +44,12 @@ html,body
     margin-bottom: 3px
     margin-left: 20px
     width: 80px
+
+  &.b
+    background: $bcolor
+    color: $tcolor
+    &:before,&:after
+      border-bottom: 1px solid $tcolor
+
 
 @import './application.sass'
