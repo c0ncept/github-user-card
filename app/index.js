@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'whatwg-fetch'
+import 'es6-shim'
 import Card from 'Card'
 
-const GITHUB_USER = 'linuxenko'
+const GITHUB_F_USER = typeof GITHUB_USER !== 'undefined' ? GITHUB_USER : 'linuxenko'
 
 
 const GITHUB_URL = 'https://api.github.com/users/'
@@ -13,7 +14,7 @@ class Application extends React.Component {
   constructor() {
     super()
     this.state = {user : {}, repos : []}
-    this.loadGitHubUser(GITHUB_USER)
+    this.loadGitHubUser(GITHUB_F_USER)
   }
 
   loadGitHubUser(user) {
